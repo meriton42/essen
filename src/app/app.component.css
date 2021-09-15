@@ -1,0 +1,16 @@
+th {
+	text-align: left;
+	writing-mode: vertical-lr;
+	font-family: sans-serif;
+	vertical-align: top;
+	text-align: center;
+}
+
+td {
+	text-align: right;
+	padding: 0 0.2em 0 0.2em;
+}
+
+td:first-child {
+	text-align: left;
+}

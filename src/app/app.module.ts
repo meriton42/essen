@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { AppComponent, NicePipe } from './app.component';
 import { FoodSelectorComponent } from './food-selector.component';
 import { FormsModule } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     FoodSelectorComponent,
+    NicePipe,
   ],
   imports: [
     BrowserModule,
