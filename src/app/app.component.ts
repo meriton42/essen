@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { naehrwert } from './naehrwert';
+import { Food, naehrwert } from './naehrwert';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +7,5 @@ import { naehrwert } from './naehrwert';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'essen';
-
-  constructor() {
-    console.log(naehrwert);
-  }
+  food: Food;
 }

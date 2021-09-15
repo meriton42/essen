@@ -1,13 +1,16 @@
 import nw from "raw-loader!./Schweizer-Nahrwertdatenbank.txt";
 
-const [title, blank, header, ...foods] = nw.split("\r\n").map(s => {
-	const [id, idv4, idFir, name, synonyms, category, density, unit, ...rest] = s.split("\t");
+const [title, blank, header, ...foods] = (nw as string).split("\r\n").map(parseFood);
+export const naehrwert = {header, foods};
+
+function parseFood(line: string) {
+	const [id, idv4, idFir, name, synonyms, category, density, unit, ...rest] = line.split("\t");
 	rest.pop(); // discard "changed" column
 	const nutrients = triples(rest).map(parseContentInfo);
 	return {id, name, synonyms, category, density, unit, nutrients};
-});
+}
 
-export const naehrwert = {header, foods};
+export type Food = ReturnType<typeof parseFood>;
 
 function triples(data: string[]) {
 	const size = 3;

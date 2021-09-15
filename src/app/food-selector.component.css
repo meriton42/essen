@@ -1,0 +1,20 @@
+input {
+	display: block;
+}
+div.optionContainer {
+	position: relative;
+}
+div.options {
+	position: absolute;
+	border: solid gray 1px;
+	border-top: none;
+}
+button {
+	display: block;
+	width: 100%;
+	text-align: left;
+	border: none;
+}
+button:active {
+	background: lightgray;
+}
