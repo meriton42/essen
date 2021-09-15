@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { naehrwert } from './naehrwert';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'essen';
+
+  constructor() {
+    console.log(naehrwert);
+  }
 }
