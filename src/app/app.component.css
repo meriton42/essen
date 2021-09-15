@@ -2,8 +2,8 @@ th {
 	text-align: left;
 	writing-mode: vertical-lr;
 	font-family: sans-serif;
-	vertical-align: top;
-	text-align: center;
+	vertical-align: middle;
+	text-align: left;
 }
 
 td {
