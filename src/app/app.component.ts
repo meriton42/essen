@@ -1,4 +1,5 @@
 import { Component, Pipe, PipeTransform } from '@angular/core';
+import * as bedarf from './bedarf';
 import { naehrwert } from './naehrwert';
 import { Recipe, updateNutrients } from './recipe';
 
@@ -13,6 +14,8 @@ export class AppComponent {
   nutrientNames = naehrwert.header.nutrients;
   
   totalNutrients: number[];
+
+  bedarf = bedarf;
 
   constructor() {
     this.update();
@@ -33,5 +36,14 @@ export class AppComponent {
 export class NicePipe implements PipeTransform {
   transform(value: number, ...args: any[]) {
     return value?.toFixed(1);
+  }
+}
+
+@Pipe({
+  name: 'nicePercent'
+})
+export class NicePercentPipe implements PipeTransform {
+  transform(value: any, ...args: any[]) {
+    return isNaN(value) ? '' : Math.round(value * 100) + "%";
   }
 }
