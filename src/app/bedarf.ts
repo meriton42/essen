@@ -68,7 +68,7 @@ export const drv: {[nutrient in string]: {[l in Limit]?: number}} = {
 	"Vitamin E-Aktivität (mg-ATE)": {AI: 13, UL: 300},
 	"Kalium (K) (mg)": {AI: 3500},
 	"Natrium (Na) (mg)": {AI: 2000, UL: 2000},
-	"Chlorid (Cl) (mg)": {AI: 3100, UL: 2000},
+	"Chlorid (Cl) (mg)": {AI: 3100, UL: 3100},
 	"Calcium (Ca) (mg)": {AR: 750, PRI: 950, UL: 2500},
 	"Magnesium (Mg) (mg)": {AI: 350, /* UL omitted, since way to complicated*/},
 	"Phosphor (P) (mg)": {AI: 550},
@@ -77,9 +77,18 @@ export const drv: {[nutrient in string]: {[l in Limit]?: number}} = {
 	"Zink (Zn)  (mg)": {AR: 11, PRI: 14, UL: 25},
 	"Selen (Se) (µg)": {AI: 70},
 }
-type Nutrient = keyof typeof drv;
+export type Nutrient = keyof typeof drv;
 
-export function coverage(amount: number, nutrient: Nutrient, limit: Limit) {
-	if (!drv[nutrient]) debugger;
-	return amount / drv[nutrient][limit];
+export function coverageReport(amount: number, nutrient: Nutrient) {
+	const {AI, AR, PRI, UL} = drv[nutrient];
+	const min = PRI ?? AR ?? AI;
+	if (!min) return null;
+	const max = UL;
+	const coverage = amount / min;
+	const goodness = amount < min ? coverage : 
+	                 amount > max ? max / amount :
+									                1;
+	const maxAt = max / min;
+	return {coverage, goodness, maxAt};
 }
+export type CoverageReport = ReturnType<typeof coverageReport>;

@@ -21,11 +21,10 @@
   </tbody>
   <tfoot>
     <tr>
-      <td style="padding-top: 1em">verglichen mit dem empfohlenen Bedarf über <input type="number" style="width: 5ch"> Tage</td>
-    </tr>
-    <tr *ngFor="let limit of bedarf.limits">
-      <td [alt]="bedarf.help[limit]">{{bedarf.limitName[limit]}}</td>
-      <td *ngFor="let name of nutrientNames; index as i">{{bedarf.coverage(totalNutrients[i], name, limit) | nicePercent}}</td>
+      <td style="padding-top: 1em; vertical-align: top;">verglichen mit dem empfohlenen Bedarf über <input type="number" [(ngModel)]="days" style="width: 5ch"> Tage</td>
+      <td *ngFor="let name of nutrientNames; index as i" style="vertical-align: top;">
+        <coverage-indicator [report]="bedarf.coverageReport(totalNutrients[i] / days, name)"></coverage-indicator>
+      </td>
     </tr>
   </tfoot>
 </table>

@@ -10,9 +10,9 @@ import { Recipe, updateNutrients } from './recipe';
 })
 export class AppComponent {
   recipe: Recipe = [];
+  days = 1;
 
   nutrientNames = naehrwert.header.nutrients;
-  
   totalNutrients: number[];
 
   bedarf = bedarf;
