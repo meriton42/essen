@@ -1,6 +1,6 @@
-import nw from "raw-loader!./Schweizer-Nahrwertdatenbank.txt";
+import naehrwertdatenbank from "./Schweizer-Nahrwertdatenbank";
 
-const [title, blank, header, ...foods] = (nw as string).split("\r\n").map(parseFood);
+const [title, blank, header, ...foods] = naehrwertdatenbank.split("\n").map(parseFood);
 export const naehrwert = {header, foods};
 
 function parseFood(line: string) {
