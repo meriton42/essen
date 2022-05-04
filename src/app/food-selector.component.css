@@ -3,6 +3,7 @@ input {
 }
 div.optionContainer {
 	position: relative;
+	z-index: 1;
 }
 div.options {
 	position: absolute;
