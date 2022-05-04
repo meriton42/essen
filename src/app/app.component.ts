@@ -34,8 +34,12 @@ export class AppComponent {
   name: 'nice',
 })
 export class NicePipe implements PipeTransform {
-  transform(value: number, ...args: any[]) {
-    return value?.toFixed(1);
+  transform(value: number, magnitude?: number) {
+    const m = magnitude || value;
+    const digits = m <  10 ? 2 
+                 : m < 100 ? 1
+                           : 0;
+    return value?.toFixed(digits);
   }
 }
 
