@@ -44,7 +44,7 @@ export const drv: {[nutrient in string]: {[l in Limit]?: number}} = {
 	"Fettsäuren, mehrfach ungesättigt (g)": {AI: gFromRI(5, "fat")},
 	"Cholesterin (mg)": {},
 	"Kohlenhydrate, verfügbar (g)": {AI: gFromRI(45, "carb"), UL: gFromRI(60, "carb")},
-	"Zucker (g)": {},
+	"Zucker (g)": {UL: gFromRI(10, "carb")}, // laut https://www.blv.admin.ch/blv/de/home/lebensmittel-und-ernaehrung/ernaehrung/produktzusammensetzung/zuckerreduktion.html
 	"Stärke (g)": {},
 	"Nahrungsfasern (g)": {AI: 25},
 	"Protein (g)": {AR: 0.66 * weight, PRI: 0.83 * weight},
