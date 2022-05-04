@@ -4,7 +4,7 @@ table {
 
 th {
 	font-family: sans-serif;
-	height: 15em; /** we must specify a size because the bounding box is unaware of CSS transforms */
+	height: 13em; /** we must specify a size because the bounding box is unaware of CSS transforms */
 	min-width: 2em; 
 	position: relative;
 	border-bottom: 1px solid black;
