@@ -1,16 +1,46 @@
+table {
+	border-spacing: 0;
+}
+
 th {
-	text-align: left;
-	writing-mode: vertical-lr;
 	font-family: sans-serif;
-	vertical-align: middle;
+	height: 15em; /** we must specify a size because the bounding box is unaware of CSS transforms */
+	min-width: 2em; 
+	position: relative;
+	border-bottom: 1px solid black;
+}
+
+th > div {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+
+th > div > div {
+	position: absolute;
+	transform-origin: 0 0; /* top left */
+	transform: rotate(-45deg);
+	padding-left: 1.4em;
+	padding-top: 0.2em;
+	width: 21em;
+	border-top: 1px solid black;
 	text-align: left;
+	white-space: nowrap; /* there is ample space, no need to squeze */
 }
 
 td {
 	text-align: right;
-	padding: 0 0.2em 0 0.2em;
+	padding: 0.1em 0.2em;
 }
 
 td:first-child {
 	text-align: left;
+}
+
+td.number {
+	border-left: 1px solid black;
+}
+
+tfoot > tr > td {
+	border-top: 1px solid black;
 }
