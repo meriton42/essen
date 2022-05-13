@@ -27,7 +27,7 @@ export class FoodSelectorComponent {
 	input: ElementRef;
 
 	search(term: string) {
-		this.options = naehrwert.foods.filter(f => (f.name || '').toLowerCase().startsWith(term.toLowerCase()));
+		this.options = naehrwert.foods.filter(f => (f.name || '').toLowerCase().includes(term.toLowerCase()));
 	}
 
 	select(food: Food) {
