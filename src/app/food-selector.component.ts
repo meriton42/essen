@@ -1,11 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from "@angular/core";
 import { Food, naehrwert } from "./naehrwert";
 
 @Component({
 	selector: 'food-selector',
 	template: `
 		<input #input [ngModel]="value?.name" (ngModelChange)="search($event)" (keydown)="ifDownGoDown($event);">
-		<div class="optionContainer" *ngIf="options">
+		<div class="optionContainer" *ngIf="hasFocus && options">
 			<div class="options">
 				<button (click)="select(food)" (keydown)="ifDownGoDown($event)" *ngFor="let food of options">{{food.name}}</button>
 			</div>
@@ -23,8 +23,20 @@ export class FoodSelectorComponent {
 
 	options: Food[];
 
+	hasFocus = false;
+
 	@ViewChild("input")
 	input: ElementRef;
+
+	@HostListener("focusin")
+	onfocus() {
+		this.hasFocus = true;
+	}
+
+	@HostListener("focusout")
+	onFocusLoss() {
+		this.hasFocus = false;
+	}
 
 	search(term: string) {
 		this.options = naehrwert.foods.filter(f => (f.name || '').toLowerCase().includes(term.toLowerCase()));
