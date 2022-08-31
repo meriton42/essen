@@ -27,10 +27,10 @@ import { CoverageReport} from "./bedarf";
 })
 export class CoverageIndicatorComponent {
 	@Input()
-	report: CoverageReport;
+	report!: CoverageReport | null;
 
 	get color() {
-		const {goodness} = this.report;
+		const {goodness} = this.report!;
 		const red = 255 * (1 - goodness);
 		const green = 192 * goodness;
 		const blue = 0;

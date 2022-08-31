@@ -1,9 +1,9 @@
 import { Food } from "./naehrwert";
 
 export type Recipe = Array<{
-	amount: number,
-	food: Food,
-	nutrients: number[],
+	amount: number | null,
+	food: Food | null,
+	nutrients: Array<number | null>,
 }>
 
 export function updateNutrients(recipe: Recipe) {
@@ -12,7 +12,8 @@ export function updateNutrients(recipe: Recipe) {
 	for (const item of recipe) {
 		item.nutrients = new Array(types);
 		for (let i = 0; i < types; i++) {
-			item.nutrients[i] = (item.amount / 100 * item.food?.nutrients[i]) || null;
+			const d = item.food?.nutrients[i];
+			item.nutrients[i] = d && item.amount ? d * item.amount / 100 : null;
 			totalNutrients[i] += item.nutrients[i] || 0;
 		}
 	}

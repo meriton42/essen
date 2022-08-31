@@ -16,17 +16,17 @@ import { Food, naehrwert } from "./naehrwert";
 export class FoodSelectorComponent {
 
 	@Input()
-	value: Food;
+	value!: Food | null;
 
 	@Output()
 	valueChange = new EventEmitter<Food>();
 
-	options: Food[];
+	options: Food[] | null = null;
 
 	hasFocus = false;
 
 	@ViewChild("input")
-	input: ElementRef;
+	input!: ElementRef;
 
 	@HostListener("focusin")
 	onfocus() {
@@ -54,7 +54,7 @@ export class FoodSelectorComponent {
 		switch (event.key) {
 			case 'ArrowDown':
 				if (event.target instanceof HTMLInputElement) {
-					event.target.parentElement.querySelector("button").focus();
+					event.target.parentElement!.querySelector("button")!.focus();
 				} else {
 					((event.target as HTMLButtonElement).nextElementSibling as HTMLButtonElement).focus();
 				}

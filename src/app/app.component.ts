@@ -12,7 +12,7 @@ export class AppComponent {
   recipe: Recipe = [];
   days = 1;
 
-  nutrientNames = naehrwert.header.nutrients;
+  nutrientNames = naehrwert.header.nutrients as unknown as string[];
   totalNutrients: number[] = [];
 
   bedarf = bedarf;
@@ -34,12 +34,16 @@ export class AppComponent {
   name: 'nice',
 })
 export class NicePipe implements PipeTransform {
-  transform(value: number, magnitude?: number) {
-    const m = magnitude || value;
-    const digits = m <  10 ? 2 
-                 : m < 100 ? 1
-                           : 0;
-    return value?.toFixed(digits);
+  transform(value: number | null, magnitude?: number) {
+    if (value == null) {
+      return null;
+    } else {
+      const m = magnitude || value;
+      const digits = m <  10 ? 2 
+                   : m < 100 ? 1
+                             : 0;
+      return value.toFixed(digits);
+    }
   }
 }
 
