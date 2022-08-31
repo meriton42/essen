@@ -13,7 +13,7 @@ export class AppComponent {
   days = 1;
 
   nutrientNames = naehrwert.header.nutrients;
-  totalNutrients: number[];
+  totalNutrients: number[] = [];
 
   bedarf = bedarf;
 
