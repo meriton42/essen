@@ -7,10 +7,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of recipe">
-      <td style="white-space:nowrap">
+      <td style="display:flex; flex-wrap: nowrap; gap:0.2em;">
         <input type="number" min="0" [(ngModel)]="item.amount" (ngModelChange)="update()" style="width: 6ch">
-        <span style="display: inline-block; width: 2.5ex; padding-left: 0.2em; padding-right: 0.2em">{{item.food?.density ? 'ml' : 'g'}}</span>
-        <food-selector [(value)]="item.food" (valueChange)="update()"></food-selector>
+        <span style="width: 2.5ex">{{item.food?.density ? 'ml' : 'g'}}</span>
+        <food-selector style="flex-grow: 1;" [(value)]="item.food" (valueChange)="update()"></food-selector>
       </td>
       <td class="number" *ngFor="let n of item.nutrients; index as i">{{n | nice:totalNutrients[i]}}</td>
     </tr>

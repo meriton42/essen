@@ -1,5 +1,9 @@
+:host {
+	display: flex;
+	flex-direction: column;
+}
 input {
-	width: 15em;
+	min-width: 15em;
 }
 div.optionContainer {
 	position: relative;
@@ -9,12 +13,13 @@ div.options {
 	position: absolute;
 	border: solid gray 1px;
 	border-top: none;
+	display: flex;
+	flex-direction: column;
 }
 button {
-	display: block;
-	width: 100%;
 	text-align: left;
 	border: none;
+	white-space: nowrap;
 }
 button:active {
 	background: lightgray;
