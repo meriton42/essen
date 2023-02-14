@@ -4,10 +4,10 @@ import { Food, naehrwert } from "./naehrwert";
 @Component({
 	selector: 'food-selector',
 	template: `
-		<input #input [ngModel]="value?.name" (ngModelChange)="search($event)" (keydown)="ifDownGoDown($event);">
+		<input #input [ngModel]="value?.name" (ngModelChange)="search($event)">
 		<div class="optionContainer" *ngIf="hasFocus && options">
 			<div class="options">
-				<button (click)="select(food)" (keydown)="ifDownGoDown($event)" *ngFor="let food of options">{{food.name}}</button>
+				<button (click)="select(food)" *ngFor="let food of options">{{food.name}}</button>
 			</div>
 		</div>
 	`,
@@ -25,6 +25,12 @@ export class FoodSelectorComponent {
 
 	hasFocus = false;
 
+	foodSelectorElement: HTMLElement;
+
+	constructor(elementRef: ElementRef) {
+		this.foodSelectorElement = elementRef.nativeElement as HTMLElement;
+	}
+
 	@ViewChild("input")
 	input!: ElementRef;
 
@@ -33,9 +39,10 @@ export class FoodSelectorComponent {
 		this.hasFocus = true;
 	}
 
-	@HostListener("focusout")
-	onFocusLoss() {
-		this.hasFocus = false;
+	@HostListener("focusout", ["$event"])
+	onFocusLoss(event: FocusEvent) {
+		// might be an internal transfer => check destination
+		this.hasFocus = this.foodSelectorElement.contains(event.relatedTarget as Node);
 	}
 
 	search(term: string) {
@@ -48,26 +55,28 @@ export class FoodSelectorComponent {
 		this.input.nativeElement.focus();
 	}
 
+	@HostListener("keydown", ["$event"])
 	ifDownGoDown(event: KeyboardEvent) {
+		const {key, target} = event;
 		// since the browser does not provide a focusNext() method, we must find the element to focus ourselves ...
 		// we do this by manually navigating the DOM since template variable references into an *ngIf, or to different iterations of *ngFor, are not supported
-		switch (event.key) {
+		switch (key) {
 			case 'ArrowDown':
-				if (event.target instanceof HTMLInputElement) {
-					event.target.parentElement!.querySelector("button")!.focus();
+				if (target instanceof HTMLInputElement) {
+					this.foodSelectorElement.querySelector("button")?.focus();
 				} else {
-					((event.target as HTMLButtonElement).nextElementSibling as HTMLButtonElement).focus();
+					((target as HTMLButtonElement).nextElementSibling as HTMLButtonElement).focus();
 				}
 				event.preventDefault();
 				break;
 			case 'ArrowUp':
-				if (event.target instanceof HTMLButtonElement) {
-					(event.target.previousElementSibling as HTMLButtonElement || this.input.nativeElement).focus();
+				if (target instanceof HTMLButtonElement) {
+					(target.previousElementSibling as HTMLButtonElement || this.input.nativeElement).focus();
 				}
 				event.preventDefault();
 				break;
 			case 'Escape':
-				if (event.target instanceof HTMLButtonElement) {
+				if (target instanceof HTMLButtonElement) {
 					this.input.nativeElement.focus();
 				}
 				event.preventDefault();
