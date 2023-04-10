@@ -7,8 +7,9 @@ function parseFood(line: string) {
 	const [id, idv4, idFir, name, synonyms, category, density, referenceUnit, ...rest] = line.split("\t");
 	rest.pop(); // discard "changed" column
 	const nutrients = triples(rest).map(parseContentInfo);
-	const unit = density ? "ml" : "g"; // we aren't using the referenceUnit, because that contains a lot of boilerplate, like "per 100g essbarer Anteil", which we don't want to repeat for each individual item
-	return {id, name, synonyms, category, density, unit, nutrients};
+	const amount = 100; // it's always 100. we aren't parsing referenceUnit, because that contains a lot of boilerplate, like "per 100g essbarer Anteil"
+	const unit = density ? "ml" : "g";
+	return {id, name, synonyms, category, density, amount, unit, nutrients};
 }
 
 export type Food = ReturnType<typeof parseFood>;

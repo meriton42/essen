@@ -1,29 +1,33 @@
 <table>
   <thead>
     <tr>
-      <th></th>
+      <th style="display:flex; flex-wrap: nowrap; gap:0.2em; align-items: flex-end;">
+        <input style="width: 6ch" type="number" min="0" [(ngModel)]="recipe.amount" (ngModelChange)="update()">
+        <input style="width: 4ex; box-sizing: border-box;" [(ngModel)]="recipe.unit" (ngModelChange)="update()">
+        <input style="flex-grow: 1" [(ngModel)]="recipe.name" (ngModelChange)="update()">
+      </th>
       <th *ngFor="let name of nutrientNames"><div><div>{{name}}</div></div></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of recipe">
+    <tr *ngFor="let item of recipe.ingredients">
       <td style="display:flex; flex-wrap: nowrap; gap:0.2em;">
         <input type="number" min="0" [(ngModel)]="item.amount" (ngModelChange)="update()" style="width: 6ch">
-        <span style="width: 2.5ex">{{item.food?.unit}}</span>
+        <span style="width: 4ex">{{item.food?.unit}}</span>
         <food-selector style="flex-grow: 1;" [(value)]="item.food" (valueChange)="update()"></food-selector>
       </td>
-      <td class="number" *ngFor="let n of item.nutrients; index as i">{{n | nice:totalNutrients[i]}}</td>
+      <td class="number" *ngFor="let n of item.nutrients; index as i">{{n | nice:recipe.nutrients[i]}}</td>
     </tr>
     <tr>
       <td>Total</td>
-      <td class="number" *ngFor="let n of totalNutrients">{{n | nice}}</td>
+      <td class="number" *ngFor="let n of recipe.nutrients">{{n | nice}}</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <td style="padding-top: 1em; vertical-align: top;">verglichen mit dem empfohlenen Bedarf über <input type="number" [(ngModel)]="days" style="width: 5ch"> Tage</td>
       <td *ngFor="let name of nutrientNames; index as i" style="vertical-align: top;">
-        <coverage-indicator [report]="bedarf.coverageReport(totalNutrients[i] / days, name)"></coverage-indicator>
+        <coverage-indicator [report]="bedarf.coverageReport(recipe.nutrients[i] / days, name)"></coverage-indicator>
       </td>
     </tr>
   </tfoot>

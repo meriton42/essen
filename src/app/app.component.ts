@@ -9,11 +9,16 @@ import { Recipe, updateNutrients } from './recipe';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  recipe: Recipe = [];
+  recipe: Recipe = {
+    amount: 1,
+    unit: '',
+    name: '',
+    ingredients: [],
+    nutrients: [],
+  }
   days = 1;
 
   nutrientNames = naehrwert.header.nutrients as unknown as string[];
-  totalNutrients: number[] = [];
 
   bedarf = bedarf;
 
@@ -23,10 +28,11 @@ export class AppComponent {
 
   update() {
     const r = this.recipe;
-    if (r.length == 0 || r[r.length - 1].food) {
-      r.push({} as any);
+    const {ingredients} = r;
+    if (ingredients.length == 0 || ingredients[ingredients.length - 1].food) {
+      ingredients.push({} as any);
     }
-    this.totalNutrients = updateNutrients(this.recipe);
+    updateNutrients(this.recipe);
   }
 }
 

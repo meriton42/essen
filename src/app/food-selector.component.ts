@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from "@angular/core";
 import { Food, naehrwert } from "./naehrwert";
+import { Recipe } from "./recipe";
 
 @Component({
 	selector: 'food-selector',
@@ -16,7 +17,7 @@ import { Food, naehrwert } from "./naehrwert";
 export class FoodSelectorComponent {
 
 	@Input()
-	value!: Food | null;
+	value!: Food | Recipe | null;
 
 	@Output()
 	valueChange = new EventEmitter<Food>();
