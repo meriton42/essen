@@ -9,7 +9,7 @@
     <tr *ngFor="let item of recipe">
       <td style="display:flex; flex-wrap: nowrap; gap:0.2em;">
         <input type="number" min="0" [(ngModel)]="item.amount" (ngModelChange)="update()" style="width: 6ch">
-        <span style="width: 2.5ex">{{item.food?.density ? 'ml' : 'g'}}</span>
+        <span style="width: 2.5ex">{{item.food?.unit}}</span>
         <food-selector style="flex-grow: 1;" [(value)]="item.food" (valueChange)="update()"></food-selector>
       </td>
       <td class="number" *ngFor="let n of item.nutrients; index as i">{{n | nice:totalNutrients[i]}}</td>

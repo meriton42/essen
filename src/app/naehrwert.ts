@@ -4,9 +4,10 @@ const [title, blank, header, ...foods] = naehrwertdatenbank.split("\n").map(pars
 export const naehrwert = {header, foods};
 
 function parseFood(line: string) {
-	const [id, idv4, idFir, name, synonyms, category, density, unit, ...rest] = line.split("\t");
+	const [id, idv4, idFir, name, synonyms, category, density, referenceUnit, ...rest] = line.split("\t");
 	rest.pop(); // discard "changed" column
 	const nutrients = triples(rest).map(parseContentInfo);
+	const unit = density ? "ml" : "g"; // we aren't using the referenceUnit, because that contains a lot of boilerplate, like "per 100g essbarer Anteil", which we don't want to repeat for each individual item
 	return {id, name, synonyms, category, density, unit, nutrients};
 }
 
