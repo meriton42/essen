@@ -1,7 +1,7 @@
 const weight = 80;
 const age = 40;
 const gender = "male";
-const pal = 1.4; // couch potato
+const pal = 1.5; // "Office worker getting little or no exercise"
 
 // laut https://www.dge.de/fileadmin/public/doc/ws/faq/FAQs-Energie.pdf
 const MJPerGram = {
@@ -18,7 +18,7 @@ function gFromRI(percent: number, kind: keyof typeof MJPerGram) {
 // laut https://multimedia.efsa.europa.eu/drvs/index.htm
 
 /** recommended energy intake */
-const energyMJ = 9.3;
+const energyMJ = 10.0;
 
 export const help = {
 	AI: "An adequate intake (AI) is used when there isn't enough data to calculate an average requirement. An AI is the average nutrient level, based on observations or experiments, that is assumed to be adequate for the population's needs.",
