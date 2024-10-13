@@ -1,12 +1,16 @@
-import { Component, Pipe, PipeTransform } from '@angular/core';
+import { Component } from '@angular/core';
 import * as bedarf from './bedarf';
 import { naehrwert } from './naehrwert';
 import { Recipe, updateNutrients } from './recipe';
+import { FoodSelectorComponent } from './food-selector.component';
+import { NicePercentPipe, NicePipe } from './nice-pipe';
+import { FormsModule } from '@angular/forms';
+import { CoverageIndicatorComponent } from './coverage-indicator.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CoverageIndicatorComponent, FoodSelectorComponent, NicePipe, NicePercentPipe ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -35,31 +39,5 @@ export class AppComponent {
       ingredients.push({} as any);
     }
     updateNutrients(this.recipe);
-  }
-}
-
-@Pipe({
-  name: 'nice',
-})
-export class NicePipe implements PipeTransform {
-  transform(value: number | null, magnitude?: number) {
-    if (value == null) {
-      return null;
-    } else {
-      const m = magnitude || value;
-      const digits = m <  10 ? 2 
-                   : m < 100 ? 1
-                             : 0;
-      return value.toFixed(digits);
-    }
-  }
-}
-
-@Pipe({
-  name: 'nicePercent'
-})
-export class NicePercentPipe implements PipeTransform {
-  transform(value: any, ...args: any[]) {
-    return isNaN(value) ? '' : Math.round(value * 100) + "%";
   }
 }

@@ -1,9 +1,12 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { Food, naehrwert } from "./naehrwert";
 import { Recipe } from "./recipe";
 
 @Component({
 	selector: 'food-selector',
+	standalone: true,
+	imports: [FormsModule],
 	template: `
 		<input #input [ngModel]="value?.name" (ngModelChange)="search($event)">
 		<div class="optionContainer" *ngIf="hasFocus && options">

@@ -3,6 +3,7 @@ import { CoverageReport} from "./bedarf";
 
 @Component({
 	selector: 'coverage-indicator',
+	standalone: true,
 	styles: [`
 						hr {
 							position: absolute; 
