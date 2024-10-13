@@ -15,15 +15,19 @@ import { CoverageReport} from "./bedarf";
 						}
 					`],
 	template: `
-							<div style="position: relative; min-height: 101px; width: 3ch; margin-left: auto; margin-right: auto;" *ngIf="report">
+						@if (report) {
+							<div style="position: relative; min-height: 101px; width: 3ch; margin-left: auto; margin-right: auto;">
 								<hr style="top: 0">
 								<hr style="top: 100px">
-								<hr style="top: {{report.maxAt * 100}}px" *ngIf="report.maxAt">
+								@if (report.maxAt) {
+									<hr style="top: {{report.maxAt * 100}}px">
+								}
 								<div style="margin-left: 2px; margin-right: 2px"
 									[style.height]="report.coverage * 100 + 'px'"
 									[style.background-color]="color"
 								></div>
 							</div>
+						}
 						`
 })
 export class CoverageIndicatorComponent {

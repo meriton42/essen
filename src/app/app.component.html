@@ -6,29 +6,39 @@
         <input style="width: 4ex; box-sizing: border-box;" [(ngModel)]="recipe.unit" (ngModelChange)="update()">
         <input style="flex-grow: 1" [(ngModel)]="recipe.name" (ngModelChange)="update()">
       </th>
-      <th *ngFor="let name of nutrientNames"><div><div>{{name}}</div></div></th>
+      @for (name of nutrientNames; track name) {
+        <th><div><div>{{name}}</div></div></th>
+      }
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of recipe.ingredients">
-      <td style="display:flex; flex-wrap: nowrap; gap:0.2em;">
-        <input type="number" min="0" [(ngModel)]="item.amount" (ngModelChange)="update()" style="width: 6ch">
-        <span style="width: 4ex">{{item.food?.unit}}</span>
-        <food-selector style="flex-grow: 1;" [(value)]="item.food" (valueChange)="update()"></food-selector>
-      </td>
-      <td class="number" *ngFor="let n of item.nutrients; index as i">{{n | nice:recipe.nutrients[i]}}</td>
-    </tr>
+    @for (item of recipe.ingredients; track $index) {
+      <tr>
+        <td style="display:flex; flex-wrap: nowrap; gap:0.2em;">
+          <input type="number" min="0" [(ngModel)]="item.amount" (ngModelChange)="update()" style="width: 6ch">
+          <span style="width: 4ex">{{item.food?.unit}}</span>
+          <food-selector style="flex-grow: 1;" [(value)]="item.food" (valueChange)="update()"></food-selector>
+        </td>
+        @for (n of item.nutrients; track $index) {
+          <td class="number">{{n | nice:recipe.nutrients[$index]}}</td>
+        }
+      </tr>
+    }
     <tr>
       <td>Total</td>
-      <td class="number" *ngFor="let n of recipe.nutrients">{{n | nice}}</td>
+      @for (n of recipe.nutrients; track $index) {
+        <td class="number">{{n | nice}}</td>
+      }
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <td style="padding-top: 1em; vertical-align: top;">verglichen mit dem empfohlenen Bedarf über <input type="number" [(ngModel)]="days" style="width: 5ch"> Tage</td>
-      <td *ngFor="let name of nutrientNames; index as i" style="vertical-align: top;">
-        <coverage-indicator [report]="bedarf.coverageReport(recipe.nutrients[i] / days, name)"></coverage-indicator>
-      </td>
+      @for (name of nutrientNames; track $index) {
+        <td style="vertical-align: top;">
+          <coverage-indicator [report]="bedarf.coverageReport(recipe.nutrients[$index] / days, name)"></coverage-indicator>
+        </td>  
+      }
     </tr>
   </tfoot>
 </table>

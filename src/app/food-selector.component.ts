@@ -9,11 +9,15 @@ import { Recipe } from "./recipe";
 	imports: [FormsModule],
 	template: `
 		<input #input [ngModel]="value?.name" (ngModelChange)="search($event)">
-		<div class="optionContainer" *ngIf="hasFocus && options">
-			<div class="options">
-				<button (click)="select(food)" *ngFor="let food of options">{{food.name}}</button>
+		@if (hasFocus && options) {
+			<div class="optionContainer">
+				<div class="options">
+					@for (food of options; track food.name) {
+						<button (click)="select(food)">{{food.name}}</button>
+					}
+				</div>
 			</div>
-		</div>
+		}
 	`,
 	styleUrls: ["food-selector.component.css"],
 })
