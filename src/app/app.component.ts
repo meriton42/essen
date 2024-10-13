@@ -5,8 +5,10 @@ import { Recipe, updateNutrients } from './recipe';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
   recipe: Recipe = {
