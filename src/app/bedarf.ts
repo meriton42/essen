@@ -85,10 +85,7 @@ export function coverageReport(amount: number, nutrient: Nutrient) {
 	if (!min) return null;
 	const max = UL;
 	const coverage = amount / min;
-	const goodness = amount < min ? coverage : 
-	          max && amount > max ? max / amount :
-									1;
 	const maxAt = max && max / min;
-	return {coverage, goodness, maxAt};
+	return {coverage, maxAt};
 }
 export type CoverageReport = NonNullable<ReturnType<typeof coverageReport>>;

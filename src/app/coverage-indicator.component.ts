@@ -20,12 +20,19 @@ import { CoverageReport} from "./bedarf";
 				<hr style="top: 0">
 				<hr style="top: 100px">
 				@if (report.maxAt) {
-					<hr style="top: {{report.maxAt * 100}}px">
+					<hr [style.top]="y(report.maxAt)">
 				}
-				<div style="margin-left: 2px; margin-right: 2px"
-					[style.height]="report.coverage * 100 + 'px'"
-					[style.background-color]="color"
-				></div>
+				<div style="margin-left: 2px; margin-right: 2px">
+					@if (report.maxAt && report.coverage > report.maxAt) {
+						<div style="background-color: forestgreen" [style.height]="y(report.maxAt)"></div>
+						<div style="background-color: orange" [style.height]="y(report.coverage - report.maxAt)"></div>
+					} @else {
+						<div style="background-color: forestgreen" [style.height]="y(report.coverage)"></div>
+						@if (report.coverage < 1) {
+							<div style="background-color: lightgreen" [style.top]="y(report.coverage)" [style.height]="y(1 - report.coverage)"></div>
+						}
+					}
+				</div>
 			</div>
 		}
 	`
@@ -34,11 +41,7 @@ export class CoverageIndicatorComponent {
 	@Input()
 	report!: CoverageReport | null;
 
-	get color() {
-		const {goodness} = this.report!;
-		const red = 255 * (1 - goodness);
-		const green = 192 * goodness;
-		const blue = 0;
-		return `rgb(${red}, ${green}, ${blue})`;
+	y(coverage: number) {
+		return coverage * 100 + "px";
 	}
 }
