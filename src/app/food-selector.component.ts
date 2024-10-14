@@ -54,7 +54,7 @@ export class FoodSelectorComponent {
 	}
 
 	search(term: string) {
-		this.options = naehrwert.foods.filter(f => (f.name || '').toLowerCase().includes(term.toLowerCase()));
+		this.options = naehrwert.foods.filter(f => f.name.toLowerCase().includes(term.toLowerCase()) || f.synonyms.toLowerCase().includes(term.toLowerCase()));
 	}
 
 	select(food: Food) {
