@@ -3,13 +3,13 @@ import * as bedarf from './bedarf';
 import { naehrwert } from './naehrwert';
 import { Recipe, updateNutrients } from './recipe';
 import { FoodSelectorComponent } from './food-selector.component';
-import { NicePercentPipe, NicePipe } from './nice-pipe';
+import { NicePipe } from './nice-pipe';
 import { FormsModule } from '@angular/forms';
 import { CoverageIndicatorComponent } from './coverage-indicator.component';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, CoverageIndicatorComponent, FoodSelectorComponent, NicePipe, NicePercentPipe ],
+  imports: [FormsModule, CoverageIndicatorComponent, FoodSelectorComponent, NicePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
