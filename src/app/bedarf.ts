@@ -65,7 +65,7 @@ export const drv: {[nutrient in string]: {[l in Limit]?: number}} = {
 	"Pantothensäure (mg)": {AI: 5},
 	"Vitamin C (Ascorbinsäure) (mg)": {AR: 90, AI: 110},
 	"Vitamin D (Calciferol) (µg)": {AI: 15, UL: 100},
-	"Vitamin E-Aktivität (mg-ATE)": {AI: 13, UL: 300},
+	"Vitamin E (α-Tocopherol) (mg)": {AI: 13, UL: 300},
 	"Kalium (K) (mg)": {AI: 3500},
 	"Natrium (Na) (mg)": {AI: 2000, UL: 2000},
 	"Chlorid (Cl) (mg)": {AI: 3100, UL: 3100},
