@@ -9,7 +9,6 @@ import { CoverageIndicatorComponent } from './coverage-indicator.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [FormsModule, CoverageIndicatorComponent, FoodSelectorComponent, NicePipe, NicePercentPipe ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
