@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, input, Input, model, Output, viewChild } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Food, naehrwert } from "./naehrwert";
 import { Recipe } from "./recipe";
@@ -8,7 +8,7 @@ import { Recipe } from "./recipe";
 	standalone: true,
 	imports: [FormsModule],
 	template: `
-		<input #input [ngModel]="value?.name" (ngModelChange)="search($event)">
+		<input #input [ngModel]="value()?.name" (ngModelChange)="search($event)">
 		@if (hasFocus && options) {
 			<div class="optionContainer">
 				<div class="options">
@@ -23,11 +23,7 @@ import { Recipe } from "./recipe";
 })
 export class FoodSelectorComponent {
 
-	@Input()
-	value!: Food | Recipe | null;
-
-	@Output()
-	valueChange = new EventEmitter<Food>();
+	value = model.required<Food | Recipe | null>();
 
 	options: Food[] | null = null;
 
@@ -39,8 +35,7 @@ export class FoodSelectorComponent {
 		this.foodSelectorElement = elementRef.nativeElement as HTMLElement;
 	}
 
-	@ViewChild("input")
-	input!: ElementRef;
+	input = viewChild.required<ElementRef>("input");
 
 	@HostListener("focusin")
 	onfocus() {
@@ -58,9 +53,9 @@ export class FoodSelectorComponent {
 	}
 
 	select(food: Food) {
-		this.valueChange.emit(food);
+		this.value.set(food);
 		this.options = null; // hide the list
-		this.input.nativeElement.focus();
+		this.input().nativeElement.focus();
 	}
 
 	@HostListener("keydown", ["$event"])
@@ -79,13 +74,13 @@ export class FoodSelectorComponent {
 				break;
 			case 'ArrowUp':
 				if (target instanceof HTMLButtonElement) {
-					(target.previousElementSibling as HTMLButtonElement || this.input.nativeElement).focus();
+					(target.previousElementSibling as HTMLButtonElement || this.input().nativeElement).focus();
 				}
 				event.preventDefault();
 				break;
 			case 'Escape':
 				if (target instanceof HTMLButtonElement) {
-					this.input.nativeElement.focus();
+					this.input().nativeElement.focus();
 				}
 				event.preventDefault();
 				break;

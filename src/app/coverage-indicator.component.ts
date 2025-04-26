@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input, Input } from "@angular/core";
 import { CoverageReport} from "./bedarf";
 
 @Component({
@@ -15,21 +15,22 @@ import { CoverageReport} from "./bedarf";
 		}
 	`],
 	template: `
-		@if (report) {
+		@let r = report();
+		@if (r) {
 			<div style="position: relative; min-height: 101px; width: 3ch; margin-left: auto; margin-right: auto;">
 				<hr style="top: 0">
 				<hr style="top: 100px">
-				@if (report.maxAt) {
-					<hr [style.top]="y(report.maxAt)">
+				@if (r.maxAt) {
+					<hr [style.top]="y(r.maxAt)">
 				}
 				<div style="margin-left: 2px; margin-right: 2px">
-					@if (report.maxAt && report.coverage > report.maxAt) {
-						<div style="background-color: forestgreen" [style.height]="y(report.maxAt)"></div>
-						<div style="background-color: orange" [style.height]="y(report.coverage - report.maxAt)"></div>
+					@if (r.maxAt && r.coverage > r.maxAt) {
+						<div style="background-color: forestgreen" [style.height]="y(r.maxAt)"></div>
+						<div style="background-color: orange" [style.height]="y(r.coverage - r.maxAt)"></div>
 					} @else {
-						<div style="background-color: forestgreen" [style.height]="y(report.coverage)"></div>
-						@if (report.coverage < 1) {
-							<div style="background-color: lightgreen" [style.top]="y(report.coverage)" [style.height]="y(1 - report.coverage)"></div>
+						<div style="background-color: forestgreen" [style.height]="y(r.coverage)"></div>
+						@if (r.coverage < 1) {
+							<div style="background-color: lightgreen" [style.top]="y(r.coverage)" [style.height]="y(1 - r.coverage)"></div>
 						}
 					}
 				</div>
@@ -38,8 +39,7 @@ import { CoverageReport} from "./bedarf";
 	`
 })
 export class CoverageIndicatorComponent {
-	@Input()
-	report!: CoverageReport | null;
+	report = input.required<CoverageReport | null>();
 
 	y(coverage: number) {
 		return coverage * 100 + "px";
