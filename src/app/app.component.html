@@ -33,7 +33,7 @@
   </tbody>
   <tfoot>
     <tr>
-      <td style="padding-top: 1em; vertical-align: top;">verglichen mit dem empfohlenen Bedarf über <input type="number" [(ngModel)]="days" style="width: 5ch"> Tage</td>
+      <td style="padding-top: 1em; vertical-align: top;">verglichen mit dem empfohlenen Bedarf über <input type="number" min="0" [(ngModel)]="days" style="width: 5ch"> Tage</td>
       @for (name of nutrientNames; track $index) {
         <td style="vertical-align: top;">
           <coverage-indicator [report]="bedarf.coverageReport(recipe.nutrients[$index] / days, name)"></coverage-indicator>
