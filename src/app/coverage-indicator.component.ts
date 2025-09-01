@@ -18,12 +18,7 @@ import { CoverageReport} from "./bedarf";
 		@let r = report();
 		@if (r) {
 			<div style="position: relative; min-height: 101px; width: 3ch; margin-left: auto; margin-right: auto;">
-				<hr style="top: 0">
-				<hr style="top: 100px">
-				@if (r.maxAt) {
-					<hr [style.top]="y(r.maxAt)">
-				}
-				<div style="margin-left: 2px; margin-right: 2px">
+				<div>
 					@if (r.maxAt && r.coverage > r.maxAt) {
 						<div style="background-color: forestgreen" [style.height]="y(r.maxAt)"></div>
 						<div style="background-color: orange" [style.height]="y(r.coverage - r.maxAt)"></div>
