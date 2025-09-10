@@ -53,6 +53,9 @@ td:first-child {
 td.number {
 	border-left: 1px solid black;
 }
+td.number:last-child {
+	border-right: 1px solid black;
+}
 
 tfoot > tr > td {
 	border-top: 1px solid black;
