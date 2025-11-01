@@ -3,16 +3,6 @@ import { Component, computed, input } from "@angular/core";
 @Component({
 	selector: 'coverage-indicator',
 	standalone: true,
-	styles: [`
-		hr {
-			position: absolute; 
-			margin: 0; 
-			width: 100%; 
-			height: 1px; 
-			background: black;
-			border: none;
-		}
-	`],
 	template: `
 		@let av = available();
 		@let min = needed().min;
