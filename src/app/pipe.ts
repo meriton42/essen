@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from "@angular/core";
 	standalone: true,
 })
 export class NicePipe implements PipeTransform {
-	transform(value: number | null, magnitude?: number) {
-		if (value == null) {
+	transform(value: number | null | undefined, magnitude?: number) {
+		if (value === null || value === undefined) {
 			return null;
 		} else {
 			const m = magnitude || value;

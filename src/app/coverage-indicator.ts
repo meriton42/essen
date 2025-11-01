@@ -1,5 +1,4 @@
-import { Component, input, Input } from "@angular/core";
-import { CoverageReport} from "./bedarf";
+import { Component, computed, input } from "@angular/core";
 
 @Component({
 	selector: 'coverage-indicator',
@@ -15,17 +14,29 @@ import { CoverageReport} from "./bedarf";
 		}
 	`],
 	template: `
-		@let r = report();
-		@if (r) {
+		@let av = available();
+		@let min = needed().min;
+		@let max = needed().max;
+
+		@if (min || max) {
 			<div style="position: relative; min-height: 101px; width: 3ch; margin-left: auto; margin-right: auto;">
 				<div>
-					@if (r.maxAt && r.coverage > r.maxAt) {
-						<div style="background-color: forestgreen" [style.height]="y(r.maxAt)"></div>
-						<div style="background-color: orange" [style.height]="y(r.coverage - r.maxAt)"></div>
-					} @else {
-						<div style="background-color: forestgreen" [style.height]="y(r.coverage)"></div>
-						@if (r.coverage < 1) {
-							<div style="background-color: lightgreen" [style.top]="y(r.coverage)" [style.height]="y(1 - r.coverage)"></div>
+					@if (min) {
+						@if (max && av > max) {
+							<div style="background-color: forestgreen" [style.height]="y(max)"></div>
+							<div style="background-color: orange" [style.height]="y(av - max)"></div>
+						} @else {
+							<div style="background-color: forestgreen" [style.height]="y(av)"></div>
+							@if (av < min) {
+								<div style="background-color: lightgreen" [style.top]="y(av)" [style.height]="y(min - av)"></div>
+							}
+						}
+					} @else if (max) {
+						@if (av < max) {
+							<div style="background-color: hsl(40 100% 75%)" [style.height]="y(av)"></div>
+						} @else {
+							<div style="background-color: hsl(40 100% 75%)" [style.height]="y(max)"></div>
+							<div style="background-color: orange" [style.top]="y(max)" [style.height]="y(av - max)"></div>
 						}
 					}
 				</div>
@@ -34,9 +45,16 @@ import { CoverageReport} from "./bedarf";
 	`
 })
 export class CoverageIndicator {
-	report = input.required<CoverageReport | null>();
+	available = input.required<number>();
+	needed = input.required<{min?: number, max?: number}>();
 
-	y(coverage: number) {
-		return coverage * 100 + "px";
+	scale = computed(() => {
+		const {min, max} = this.needed();
+		const reference = (min || max)!;
+		return 100 / reference;
+    });
+
+	y(v: number) {
+		return v * this.scale() + "px";
 	}
 }

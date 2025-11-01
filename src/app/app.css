@@ -2,7 +2,17 @@ table {
 	border-spacing: 0;
 }
 
-th {
+th:first-child {
+	text-align: left;
+	font-weight: normal;
+}
+
+td {
+	text-align: right;
+	padding: 0.1em 0.2em;
+}
+
+thead th {
 	font-family: sans-serif;
 	height: 13em; /** we must specify a size because the bounding box is unaware of CSS transforms */
 	min-width: 2em; 
@@ -10,18 +20,18 @@ th {
 	border-bottom: 1px solid black;
 }
 
-th:last-child {
+thead th:last-child {
 	min-width: 0.7px;
 	padding: 0;
 }
 
-th > div {
+thead th > div {
 	position: absolute;
 	left: 0;
 	bottom: 0;
 }
 
-th > div > div {
+thead th > div > div {
 	position: absolute;
 	transform-origin: 0 0; /* top left */
 	transform: rotate(-45deg);
@@ -33,21 +43,8 @@ th > div > div {
 	white-space: nowrap; /* there is ample space, no need to squeze */
 }
 
-th:first-child {
+thead th:first-child {
 	padding: 0.1em 0.2em;
-}
-
-th > input {
-	font-weight: inherit;
-}
-
-td {
-	text-align: right;
-	padding: 0.1em 0.2em;
-}
-
-td:first-child {
-	text-align: left;
 }
 
 td.number {
@@ -57,6 +54,7 @@ td.number:last-child {
 	border-right: 1px solid black;
 }
 
-tfoot > tr > td {
+tfoot > tr:first-child > td,
+tfoot > tr:last-child > td {
 	border-top: 1px solid black;
 }

@@ -1,4 +1,4 @@
-import { Food } from "./naehrwert";
+import { Food, naehrwert } from "./naehrwert";
 
 export type Recipe = {
 	amount: number, // 1
@@ -14,7 +14,7 @@ export type Recipe = {
 
 export function updateNutrients(recipe: Recipe) {
 	const {ingredients} = recipe;
-	const types = ingredients[0].food?.nutrients?.length || 0;
+	const types = naehrwert.header.nutrients.length || 0;
 	const totalNutrients = new Array(types).fill(0);
 	for (const item of ingredients) {
 		item.nutrients = new Array(types);

@@ -35,7 +35,7 @@ export const limitName: {[l in Limit]: string} = {
 	UL: "tolerable upper intake level",
 }
 
-export const drv: {[nutrient in string]: {[l in Limit]?: number}} = {
+export const drv = simplifyDrv({
 	"Energie, Kilojoule (kJ)": {AR: energyMJ * 1000},
 	"Energie, Kalorien (kcal)": {AR: energyMJ * 239},
 	"Fett, total (g)": {AI: gFromRI(20, "fat"), UL: gFromRI(35, "fat")},
@@ -76,16 +76,17 @@ export const drv: {[nutrient in string]: {[l in Limit]?: number}} = {
 	"Jod (I) (µg)": {AI: 150, UL: 600},
 	"Zink (Zn)  (mg)": {AR: 11, PRI: 14, UL: 25},
 	"Selen (Se) (µg)": {AI: 70},
-}
+});
 export type Nutrient = keyof typeof drv;
 
-export function coverageReport(amount: number, nutrient: Nutrient) {
-	const {AI, AR, PRI, UL} = drv[nutrient];
-	const min = PRI ?? AR ?? AI;
-	if (!min) return null;
-	const max = UL;
-	const coverage = amount / min;
-	const maxAt = max && max / min;
-	return {coverage, maxAt};
+function simplifyDrv<N extends string>(rawDrv: {[nutrient in N]: {[l in Limit]?: number}}) {
+	const simpleDrv = {} as {[nutrient in N]: {min?: number, max?: number}};
+	for (const n in rawDrv) {
+		const {AI, AR, PRI, UL} = rawDrv[n];
+		simpleDrv[n] = {
+			min: PRI ?? AR ?? AI,
+			max: UL,
+		};
+	}
+	return simpleDrv;
 }
-export type CoverageReport = NonNullable<ReturnType<typeof coverageReport>>;

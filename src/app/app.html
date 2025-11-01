@@ -15,29 +15,41 @@
   <tbody>
     @for (item of recipe.ingredients; track $index) {
       <tr>
-        <td style="display:flex; flex-wrap: nowrap; gap:0.2em;">
+        <th style="display:flex; flex-wrap: nowrap; gap:0.2em;">
           <input type="number" min="0" [(ngModel)]="item.amount" (ngModelChange)="update()" style="width: 6ch">
           <span style="width: 4ex">{{item.food?.unit}}</span>
           <food-selector style="flex-grow: 1;" [(value)]="item.food" (valueChange)="update()"></food-selector>
-        </td>
+        </th>
         @for (n of item.nutrients; track $index) {
-          <td class="number">{{n | nice:recipe.nutrients[$index]}}</td>
+          <td class="number">{{n | nice:largestValue[$index]}}</td>
         }
       </tr>
     }
-    <tr>
-      <td>Total</td>
-      @for (n of recipe.nutrients; track $index) {
-        <td class="number">{{n | nice}}</td>
-      }
-    </tr>
   </tbody>
   <tfoot>
     <tr>
-      <td>verglichen mit dem empfohlenen Bedarf über <input type="number" min="0" [(ngModel)]="days" style="width: 5ch"> Tage</td>
+      <th>Total</th>
+      @for (n of recipe.nutrients; track $index) {
+        <td class="number">{{n | nice:largestValue[$index]}}</td>
+      }
+    </tr>
+    <tr>
+      <th>Bedarf für <input type="number" min="0" [(ngModel)]="days" (ngModelChange)="update()" style="width: 5ch"> Tage</th>
+      @for (n of nutrientNames; track $index) {
+        <td class="number">{{needs[$index].min | nice:largestValue[$index]}}</td>
+      }
+    </tr>
+    <tr>
+      <th>Empfohlene Maximalmenge</th>
+      @for (n of nutrientNames; track $index) {
+        <td class="number">{{needs[$index].max | nice:largestValue[$index]}}</td>
+      }
+    </tr>
+    <tr>
+      <th></th>
       @for (name of nutrientNames; track $index) {
         <td style="vertical-align: top; padding-top: 0">
-          <coverage-indicator [report]="bedarf.coverageReport(recipe.nutrients[$index] / days, name)"></coverage-indicator>
+          <coverage-indicator [available]="recipe.nutrients[$index]" [needed]="needs[$index]"/>
         </td>  
       }
     </tr>
