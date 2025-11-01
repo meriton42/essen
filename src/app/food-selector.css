@@ -1,0 +1,26 @@
+:host {
+	display: flex;
+	flex-direction: column;
+}
+input {
+	min-width: 15em;
+}
+div.optionContainer {
+	position: relative;
+	z-index: 1;
+}
+div.options {
+	position: absolute;
+	border: solid gray 1px;
+	border-top: none;
+	display: flex;
+	flex-direction: column;
+}
+button {
+	text-align: left;
+	border: none;
+	white-space: nowrap;
+}
+button:active {
+	background: lightgray;
+}

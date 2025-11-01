@@ -2,18 +2,18 @@ import { Component } from '@angular/core';
 import * as bedarf from './bedarf';
 import { naehrwert } from './naehrwert';
 import { Recipe, updateNutrients } from './recipe';
-import { FoodSelectorComponent } from './food-selector.component';
-import { NicePipe } from './nice-pipe';
+import { FoodSelector } from './food-selector';
+import { NicePipe } from './pipe';
 import { FormsModule } from '@angular/forms';
-import { CoverageIndicatorComponent } from './coverage-indicator.component';
+import { CoverageIndicator } from './coverage-indicator';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, CoverageIndicatorComponent, FoodSelectorComponent, NicePipe],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [FormsModule, CoverageIndicator, FoodSelector, NicePipe],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
 })
-export class AppComponent {
+export class App {
   recipe: Recipe = {
     amount: 1,
     unit: '',
